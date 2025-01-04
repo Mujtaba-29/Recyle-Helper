@@ -6,3 +6,4 @@ groq
 transformers
 torchvision
 numpy
+opencv-python-headless
