@@ -10,6 +10,9 @@ import numpy as np
 # Access Groq API key from Streamlit Secrets
 api_key = st.secrets["GROQ_API_KEY"]
 
+# Set it as an environment variable
+os.environ["GROQ_API_KEY"] = api_key
+
 # Initialize Groq client
 client = Groq(api_key=api_key)
 
