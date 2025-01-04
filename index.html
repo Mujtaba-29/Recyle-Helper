@@ -9,12 +9,10 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            color: #f0f0f0;
-            background: linear-gradient(135deg, #1b5e20, #004d40);
+            color: #f4f4f4;
+            background: linear-gradient(120deg, #1b5e20, #388e3c, #004d40);
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
             min-height: 100vh;
             overflow-x: hidden;
         }
@@ -22,6 +20,7 @@
         header {
             text-align: center;
             padding: 20px;
+            background-color: rgba(0, 77, 64, 0.9);
         }
 
         header h1 {
@@ -32,15 +31,37 @@
 
         header p {
             font-size: 1.2rem;
-            color: #a5d6a7;
+            margin: 10px 0 0;
+            color: #c8e6c9;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: stretch;
+        }
+
+        .sidebar {
+            width: 20%;
+            min-width: 250px;
+            background-color: #2e7d32;
+            padding: 20px;
+            color: #ffffff;
+            box-shadow: 5px 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
         }
 
         .content {
-            width: 100%;
-            max-width: 1200px;
-            text-align: center;
-            padding: 20px;
-            box-sizing: border-box;
+            flex: 1;
+            padding: 40px;
+            text-align: left;
         }
 
         .content h2 {
@@ -50,27 +71,26 @@
         }
 
         .content p {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: #e0f2f1;
-            line-height: 1.6;
+            line-height: 1.8;
+            text-align: justify;
         }
 
         footer {
-            margin-top: auto;
-            padding: 20px;
             background-color: #004d40;
+            color: #a5d6a7;
             text-align: center;
-            width: 100%;
+            padding: 20px;
+            margin-top: auto;
         }
 
         footer p {
-            font-size: 1rem;
-            color: #a5d6a7;
             margin: 5px 0;
         }
 
         footer a {
-            color: #e0f2f1;
+            color: #80cbc4;
             text-decoration: none;
             font-weight: bold;
         }
@@ -85,13 +105,24 @@
         <h1>Recycle-Smart-PK</h1>
         <p>Your Sustainability Partner 🌍</p>
     </header>
-    <div class="content">
-        <h2>Welcome to Recycle-Smart-PK</h2>
-        <p>
-            Explore innovative ways to recycle and repurpose waste with the help of AI. 
-            Upload images to identify waste materials, get actionable recycling suggestions, 
-            and learn how you can reduce your carbon footprint. Together, we can make the planet greener!
-        </p>
+    <div class="container">
+        <div class="sidebar">
+            <h2>Navigation</h2>
+            <p>Use the app to:</p>
+            <ul>
+                <li>Upload images to detect waste.</li>
+                <li>Get recycling suggestions.</li>
+                <li>Calculate carbon footprint reduction.</li>
+            </ul>
+        </div>
+        <div class="content">
+            <h2>Welcome to Recycle-Smart-PK</h2>
+            <p>
+                Recycle-Smart-PK is your trusted partner in sustainability. With advanced AI, we help you
+                identify waste materials, suggest creative ways to recycle them, and calculate your carbon
+                footprint reduction. Together, we can make a significant impact on our planet's future!
+            </p>
+        </div>
     </div>
     <footer>
         <p>Contact us: <a href="mailto:mujtabanaqvi29@gmail.com">mujtabanaqvi29@gmail.com</a></p>
@@ -99,5 +130,3 @@
     </footer>
 </body>
 </html>
-
-  
