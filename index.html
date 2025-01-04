@@ -9,47 +9,50 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            color: #004d40;
-            background: linear-gradient(to bottom right, #e8f5e9, #c8e6c9);
+            color: #f4f4f4;
+            background: linear-gradient(to right, #1b5e20, #388e3c, #4caf50, #8bc34a);
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         header {
             text-align: center;
-            padding: 20px;
-            background: #004d40;
+            padding: 30px;
+            background: rgba(0, 77, 64, 0.9);
             color: #ffffff;
         }
 
         header h1 {
             margin: 0;
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: bold;
         }
 
         header p {
-            margin: 10px 0 0;
-            font-size: 1.2rem;
+            margin-top: 10px;
+            font-size: 1.3rem;
+            color: #c8e6c9;
         }
 
         .container {
+            flex: 1;
             display: flex;
             flex-direction: row;
             width: 100%;
-            height: calc(100vh - 160px);
         }
 
         .sidebar {
-            flex: 1;
+            width: 20%;
             background: #2e7d32;
             padding: 20px;
             color: #ffffff;
+            box-shadow: 5px 0 10px rgba(0, 0, 0, 0.3);
         }
 
         .sidebar h2 {
-            font-size: 1.8rem;
             text-align: center;
-            margin-bottom: 20px;
+            font-size: 1.8rem;
         }
 
         .sidebar ul {
@@ -64,63 +67,35 @@
 
         .sidebar ul li::before {
             content: "•";
-            color: #c8e6c9;
+            color: #a5d6a7;
             font-weight: bold;
             display: inline-block;
             margin-right: 10px;
         }
 
         .content {
-            flex: 2;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background: #ffffff;
-            box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            padding: 30px;
+            background: #e8f5e9;
+            color: #004d40;
         }
 
         .content h2 {
-            font-size: 2.2rem;
-            margin-bottom: 15px;
-            text-align: center;
-            color: #2e7d32;
-        }
-
-        .content p {
-            font-size: 1rem;
-            line-height: 1.6;
-            text-align: justify;
+            font-size: 2.5rem;
             margin-bottom: 20px;
         }
 
-        .app-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .app-container a {
-            display: inline-block;
-            text-decoration: none;
-            color: #ffffff;
-            background: #388e3c;
-            padding: 10px 20px;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-
-        .app-container a:hover {
-            background: #1b5e20;
+        .content p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            text-align: justify;
         }
 
         footer {
             text-align: center;
             padding: 20px;
-            background: #004d40;
-            color: #ffffff;
+            background: rgba(0, 77, 64, 1);
+            color: #a5d6a7;
         }
 
         footer p {
@@ -128,7 +103,7 @@
         }
 
         footer a {
-            color: #a5d6a7;
+            color: #80cbc4;
             text-decoration: none;
             font-weight: bold;
         }
@@ -141,28 +116,24 @@
 <body>
     <header>
         <h1>Recycle-Smart-PK</h1>
-        <p>Transforming Waste into Sustainable Solutions 🌍</p>
+        <p>Transforming Waste, One Step at a Time 🌍</p>
     </header>
     <div class="container">
-        <!-- Sidebar for Introduction -->
         <div class="sidebar">
-            <h2>Introduction</h2>
-            <p>Welcome to Recycle-Smart-PK! Our platform uses cutting-edge AI to help you:</p>
+            <h2>Navigation</h2>
             <ul>
-                <li>Identify waste materials</li>
-                <li>Discover recycling ideas</li>
-                <li>Reduce your carbon footprint</li>
-                <li>Make a sustainable impact</li>
+                <li>Upload Images to Detect Waste</li>
+                <li>Get Recycling Suggestions</li>
+                <li>Calculate Carbon Footprint Reduction</li>
             </ul>
         </div>
-
-        <!-- Main Content for App Functionality -->
         <div class="content">
-            <h2>App Functionality</h2>
-            <div class="app-container">
-                <p>Launch our AI-powered app to start your recycling journey:</p>
-                <a href="https://recycle-smart-pk.streamlit.app" target="_blank">Launch App</a>
-            </div>
+            <h2>Welcome to Recycle-Smart-PK</h2>
+            <p>
+                Join us in our mission to revolutionize recycling. Powered by cutting-edge AI, our platform
+                helps you identify waste materials, explore innovative recycling ideas, and reduce your carbon footprint.
+                Together, we can create a sustainable future. Discover, recycle, and contribute to the green revolution today!
+            </p>
         </div>
     </div>
     <footer>
