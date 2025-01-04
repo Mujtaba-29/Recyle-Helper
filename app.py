@@ -86,36 +86,52 @@ def get_recycling_suggestions_from_groq(item, quantity):
     except Exception as e:
         return f"Error fetching suggestions: {e}"
 
+# Function to get DIY steps from Groq
+def get_diy_steps_from_groq(item):
+    prompt = (
+        f"Provide step-by-step DIY instructions to create '{item}' in a concise and practical way. "
+        f"Focus on clear bullet points and minimal resources."
+    )
+    try:
+        chat_completion = client.chat.completions.create(
+            messages=[{"role": "user", "content": prompt}],
+            model="llama-3.3-70b-versatile",
+            stream=False,
+        )
+        return chat_completion.choices[0].message.content
+    except Exception as e:
+        return f"Error fetching DIY instructions: {e}"
+
 # Sidebar
 st.sidebar.markdown(
-    '''
+    """
     <div style="text-align: center;">
         <h2 style="color: #004d40;">♻️ Navigation</h2>
         <p style="color: #00796b;">Use the app to identify waste items and generate recycling suggestions.</p>
     </div>
-    ''',
+    """,
     unsafe_allow_html=True,
 )
 action = st.sidebar.radio("Choose an action:", ["Upload Image", "Get Suggestions for Items"])
 
 # Main app
 st.markdown(
-    '''
+    """
     <div style="text-align: center; background-color: #004d40; padding: 20px; border-radius: 10px;">
         <h1 style="color: #ffffff;">♻️ Recycle-Smart-PK</h1>
         <p style="font-size: 18px; color: #ffffff;">Powered by LLM 🌍</p>
     </div>
-    ''',
+    """,
     unsafe_allow_html=True,
 )
 
 if action == "Upload Image":
     st.markdown(
-        '''
+        """
         <div style="text-align: center; background-color: #e3f2fd; padding: 10px; border-radius: 5px;">
             <h3 style="color: #01579b;">Upload an image of waste, and we'll identify items, suggest recycling ideas, and calculate carbon footprint reduction!</h3>
         </div>
-        ''',
+        """,
         unsafe_allow_html=True,
     )
     uploaded_image = st.file_uploader("Upload an image of the waste:", type=["jpg", "jpeg", "png"])
@@ -153,27 +169,88 @@ if action == "Upload Image":
 
                 st.write(response)
                 st.markdown(
-                    f'''<p style="color: #2e7d32;">🌍 Carbon Footprint Reduction: {carbon_reduction:.2f} kg CO₂</p>''',
+                    f"""<p style="color: #2e7d32;">🌍 Carbon Footprint Reduction: {carbon_reduction:.2f} kg CO₂</p>""",
                     unsafe_allow_html=True,
                 )
                 st.write("---")
 
             st.markdown(
-                f'''<div style="padding: 15px; text-align: center; background-color: #004d40; color: #ffffff; border-radius: 5px;">
+                f"""<div style="padding: 15px; text-align: center; background-color: #004d40; color: #ffffff; border-radius: 5px;">
                     🌟 Total Carbon Footprint Reduction: <b>{total_carbon_reduction:.2f} kg CO₂ saved</b>
-                </div>''',
+                </div>""",
                 unsafe_allow_html=True,
             )
         else:
             st.error("No recognizable waste items detected.")
 
+elif action == "Get Suggestions for Items":
+    st.markdown(
+        """
+        <div style="text-align: center; background-color: #fff3e0; padding: 10px; border-radius: 5px;">
+            <h3 style="color: #ff6f00;">Select clutter items for recycling suggestions:</h3>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    selected_items = []
+    quantities = {}
+
+    cols = st.columns(len(predefined_clutter_items))
+    for i, (item, emoji) in enumerate(predefined_clutter_items.items()):
+        with cols[i]:
+            if st.checkbox(f"{emoji} {item.title()}", key=item):
+                selected_items.append(item)
+                quantities[item] = st.number_input(f"{item} (kg):", min_value=0.0, step=0.1, key=f"qty_{item}")
+
+    if selected_items and st.button("Generate Suggestions"):
+        total_carbon_reduction = 0
+        st.write("### ♻️ Recycling Suggestions and Impact:")
+        for item, quantity in quantities.items():
+            if quantity > 0:
+                response = get_recycling_suggestions_from_groq(item, quantity)
+                carbon_reduction = max(0.5, min(2.5, carbon_reduction_data.get(item.lower(), 0) * quantity))
+                total_carbon_reduction += carbon_reduction
+
+                st.markdown(f"**{item} ({quantity} kg)**")
+                st.write(response)
+                st.markdown(
+                    f"""<p style="color: #2e7d32;">🌍 Carbon Footprint Reduction: {carbon_reduction:.2f} kg CO₂</p>""",
+                    unsafe_allow_html=True,
+                )
+                st.write("---")
+
+        st.markdown(
+            f"""<div style="padding: 15px; text-align: center; background-color: #004d40; color: #ffffff; border-radius: 5px;">
+                🌟 Total Carbon Footprint Reduction: <b>{total_carbon_reduction:.2f} kg CO₂ saved</b>
+            </div>""",
+            unsafe_allow_html=True,
+        )
+
+    # Add session state for DIY instructions
+    if "diy_suggestion" not in st.session_state:
+        st.session_state.diy_suggestion = ""
+
+    suggestion = st.text_input("Enter a suggestion to get DIY instructions:", key="diy_input")
+    if st.button("Generate DIY Instructions"):
+        if suggestion:
+            st.session_state.diy_suggestion = get_diy_steps_from_groq(suggestion)
+
+    if st.session_state.diy_suggestion:
+        st.markdown(
+            f"""<div style="padding: 10px; background-color: #f0f4c3; color: #33691e; border-radius: 5px;">
+                <h4>📝 DIY Instructions:</h4>
+                {st.session_state.diy_suggestion}
+            </div>""",
+            unsafe_allow_html=True,
+        )
+
 # Motivational Message
 st.markdown(
-    '''
+    """
     <div style="text-align: center; padding: 20px; background-color: #dcedc8; border-radius: 10px;">
         <h3 style="color: #33691e;">🌍 Let's Keep Our Planet Green!</h3>
         <p style="color: #2e7d32;">Recycling is not just an action but a responsibility. Together, we can make a difference. ♻️💚</p>
     </div>
-    ''',
+    """,
     unsafe_allow_html=True,
 )
