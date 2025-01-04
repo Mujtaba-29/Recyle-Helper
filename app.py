@@ -16,6 +16,20 @@ os.environ["GROQ_API_KEY"] = api_key
 # Initialize Groq client
 client = Groq(api_key=api_key)
 
+
+
+# Load and display HTML file
+html_path = "index.html"  # Adjust path if in a subfolder
+if os.path.exists(html_path):
+    with open(html_path, 'r', encoding='utf-8') as file:
+        html_content = file.read()
+    st.components.v1.html(html_content, height=800)
+else:
+    st.error("HTML file not found.")
+
+
+
+
 # Carbon footprint reduction data (kg CO2 per kg recycled)
 carbon_reduction_data = {
     "plastic bottle": 3.8,
